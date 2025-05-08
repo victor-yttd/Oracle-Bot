@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 const axios = require('axios');
 const fs = require('fs');
+const math = require('mathjs');
 
 const client = new Client({
   intents: [
@@ -75,7 +76,7 @@ async function chamarCohere(userId, pergunta, reset = false) {
 }
 
 async function oracleAleatoria() {
-  return await chamarCohere('random', 'Diga algum fato aleatorio mundial.');
+  return await chamarCohere('random', 'Diga algum fato aleatório mundial.');
 }
 
 function escolherImagemAleatoria() {
@@ -132,8 +133,9 @@ client.on('messageCreate', async (message) => {
         '`!oracle + [pergunta]` — Faz uma pergunta para a Oracle (ou mencione o bot direto com uma pergunta).',
         '`!img` — Responde com uma frase aleatória e uma imagem gif da Oracle.',
         '`!ship [nome1] e [nome2]` — Teste a compatibilidade de duas pessoas! Ou objetos...?',
-        '`!cursedfact` — Receba um fato amaldiçoado (creepy e estranho).',
-        '`!absurdfact` — A Oracle inventa um fato absurdo e inacreditável.',
+        '`!fatocursed ` — Receba um fato cursed (creepy e estranho).',
+        '`!fatoabsurdo` — A Oracle inventa um fato absurdo e inacreditável.',
+        '`!quiz` — Use para calcular uma expressão!',
         '`!status` — Mostra o status atual do bot (uptime, memória, mensagens).',
         '`!resetar-historico` — Reseta o histórico de conversa com a Oracle.',
         '`!desligar` — Desliga completamente o bot (e limpa o histórico).',
@@ -168,6 +170,16 @@ client.on('messageCreate', async (message) => {
     return message.reply(resposta);
   }
 
+  if (message.content.toLowerCase().startsWith('!calc ')) {
+    try {
+      const expressao = message.content.slice(6).trim();
+      const resultado = eval(expressao.replace(/[^-+*/().\d]/g, ''));
+      return message.reply(`🧮 *Resultado de:* \`${expressao}\` = **${resultado}**`);
+    } catch (error) {
+      return message.reply('Hmm... isso aí não parece uma conta válida! 🤔');
+    }
+  }
+
   // Comando !img
   if (message.content.toLowerCase() === '!img') {
     const resposta = await oracleAleatoria();
@@ -180,9 +192,9 @@ client.on('messageCreate', async (message) => {
   }
 
   // Comando !cursedfact
-  if (message.content.toLowerCase() === '!cursedfact') {
+  if (message.content.toLowerCase() === '!fatocursed') {
     const fact = cursedFacts[Math.floor(Math.random() * cursedFacts.length)];
-    return message.reply(`🌼 *Aqui vai um fato amaldiçoado!*\n\n> ${fact}`);
+    return message.reply(`🌼 *Aqui vai um fato!*\n\n> ${fact}`);
   }
 
   const SHIPS_PATH = './ships.json';
@@ -256,8 +268,8 @@ if (message.content.toLowerCase().startsWith('!ship ')) {
   }
 
   // Comando !absurdfact
-  if (message.content.toLowerCase() === '!absurdfact') {
-    const resposta = await chamarCohere(message.author.id, 'Diga um fato completamente absurdo e inacreditável que pareça verdadeiro.');
+  if (message.content.toLowerCase() === '!fatoabsurdo') {
+    const resposta = await chamarCohere(message.author.id, 'Diga um fato completamente absurdo e inacreditável que pareça mentira.');
     return message.reply(`🤯 *Fato absurdo vindo da deep web do meu cérebro:*\n\n> ${resposta}`);
   }
 
