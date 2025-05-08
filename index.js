@@ -137,7 +137,6 @@ client.on('messageCreate', async (message) => {
         '`!status` — Mostra o status atual do bot (uptime, memória, mensagens).',
         '`!resetar-historico` — Reseta o histórico de conversa com a Oracle.',
         '`!desligar` — Desliga completamente o bot (e limpa o histórico).',
-        '`!veloso` — Apenas... abusado.',
         '`@Oracle [mensagem]` — Você pode mencionar o bot com uma pergunta no lugar de usar !oracle.'
       ];
   
@@ -147,11 +146,6 @@ client.on('messageCreate', async (message) => {
                  '\n\n💡 *Use com sabedoria... ou não! Eu não ligo! Hehe~*'
       });
     }
-  
-
-  if (message.content.toLowerCase() === '!veloso') {
-    return message.reply('Abusado!');
-  }
 
   if (message.content === `<@${client.user.id}>`) {
     return message.reply('Yo!');
