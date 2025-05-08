@@ -1,0 +1,198 @@
+openapi: 3.0.0
+info:
+  title: Oracle Bot API
+  description: Documentação da API para interação com o bot Oracle
+  version: 1.0.0
+servers:
+  - url: 'https://api.oraclebot.com'
+    description: API para interagir com o bot Oracle
+
+paths:
+  /oracle:
+    get:
+      summary: Faz uma pergunta para a Oracle
+      description: Envie uma pergunta para o bot Oracle e obtenha uma resposta.
+      parameters:
+        - in: query
+          name: pergunta
+          required: true
+          schema:
+            type: string
+          description: A pergunta que será feita à Oracle
+      responses:
+        '200':
+          description: Resposta da Oracle
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resposta:
+                    type: string
+                    example: "A Oracle diz: 'A resposta para sua pergunta é...'"
+  
+  /img:
+    get:
+      summary: Retorna uma imagem gif e frase aleatória da Oracle
+      description: Obtém uma frase aleatória e uma imagem gif da Oracle.
+      responses:
+        '200':
+          description: Frase e imagem gif aleatória
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  frase:
+                    type: string
+                    example: "Aqui está uma mensagem da Oracle!"
+                  gif_url:
+                    type: string
+                    example: "https://example.com/ora-image.gif"
+
+  /ship:
+    get:
+      summary: Teste a compatibilidade entre duas pessoas ou objetos
+      description: Teste a compatibilidade de duas pessoas ou objetos usando a Oracle.
+      parameters:
+        - in: query
+          name: nome1
+          required: true
+          schema:
+            type: string
+          description: O primeiro nome ou objeto
+        - in: query
+          name: nome2
+          required: true
+          schema:
+            type: string
+          description: O segundo nome ou objeto
+      responses:
+        '200':
+          description: Resultado do teste de compatibilidade
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  compatibilidade:
+                    type: string
+                    example: "A compatibilidade entre [nome1] e [nome2] é... 75%"
+
+  /cursedfact:
+    get:
+      summary: Fato amaldiçoado (creepy e estranho)
+      description: Receba um fato misterioso e estranho da Oracle.
+      responses:
+        '200':
+          description: Fato amaldiçoado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fato:
+                    type: string
+                    example: "Você sabia que... os gatos podem ver o futuro?"
+
+  /absurdfact:
+    get:
+      summary: Fato absurdo e inacreditável
+      description: Receba um fato inventado e absurdo pela Oracle.
+      responses:
+        '200':
+          description: Fato absurdo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fato:
+                    type: string
+                    example: "Você sabia que... as vacas podem voar sob certas condições?"
+
+  /status:
+    get:
+      summary: Mostra o status atual do bot
+      description: Retorna o status do bot, incluindo uptime, uso de memória e mensagens.
+      responses:
+        '200':
+          description: Status do bot
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uptime:
+                    type: string
+                    example: "12 horas"
+                  memoria:
+                    type: string
+                    example: "50MB"
+                  mensagens:
+                    type: integer
+                    example: 1500
+
+  /resetar-historico:
+    post:
+      summary: Reseta o histórico de conversa com a Oracle
+      description: Apaga todo o histórico de conversa com a Oracle.
+      responses:
+        '200':
+          description: Histórico resetado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: "Histórico de conversa resetado com sucesso."
+
+  /desligar:
+    post:
+      summary: Desliga completamente o bot
+      description: Desliga o bot e limpa o histórico de conversas.
+      responses:
+        '200':
+          description: Bot desligado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    example: "Bot desligado e histórico limpo."
+
+  /oracle/mention:
+    post:
+      summary: Mencionar o bot diretamente com uma mensagem
+      description: Envie uma mensagem mencionando a Oracle diretamente sem usar o comando `!oracle`.
+      parameters:
+        - in: query
+          name: mensagem
+          required: true
+          schema:
+            type: string
+          description: A mensagem mencionando a Oracle
+      responses:
+        '200':
+          description: Resposta à menção da Oracle
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resposta:
+                    type: string
+                    example: "Oracle diz: 'Sim, posso ajudar com isso!'"
+
+components:
+  schemas:
+    Mensagem:
+      type: object
+      properties:
+        mensagem:
+          type: string
+          example: "Sua pergunta foi recebida com sucesso!"
