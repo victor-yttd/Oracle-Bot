@@ -1,1 +1,3 @@
-# oracle-bot
+# Oracle!
+
+Bot puramente feito para trabalho escolar ⚜️.
